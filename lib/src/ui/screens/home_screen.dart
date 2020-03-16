@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +70,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             floatingActionButton: Padding(
-              padding: const EdgeInsets.only(bottom: 30.0),
+              padding: (Platform.isIOS)
+                  ? const EdgeInsets.only(bottom: 30.0)
+                  : const EdgeInsets.only(bottom: 0.0),
               child: FloatingActionButton(
                 child: Icon(Icons.crop_free),
                 onPressed: () => null,
