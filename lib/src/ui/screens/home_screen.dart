@@ -18,6 +18,71 @@ class HomeScreen extends StatelessWidget {
       child: Consumer<HomeScreenProvider>(
         builder: (context, homeScreenProvider, child) {
           return Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Text('Drawer Header'),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Item 1'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Item 2'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                ],
+              ),
+            ),
+            appBar: AppBar(
+              title: Text(
+                'ScanGo',
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontFamily: 'Lobster',
+                ),
+              ),
+              // leading: Builder(
+              //   builder: (context) {
+              //     return IconButton(
+              //       onPressed: () {
+              //         Scaffold.of(context).openDrawer();
+              //       },
+              //       icon: Icon(
+              //         Icons.menu,
+              //         size: 32.0,
+              //       ),
+              //     );
+              //   },
+              // ),
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: CustomSearchDelegate(),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    // size: 32.0,
+                  ),
+                ),
+              ],
+            ),
             body: WillPopScope(
               onWillPop: () async => !await homeScreenProvider
                   .navigators[homeScreenProvider.currentIndex].currentState
@@ -84,5 +149,42 @@ class HomeScreen extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    return Text('search');
   }
 }
