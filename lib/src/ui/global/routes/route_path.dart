@@ -1,3 +1,4 @@
 class RoutePath {
-  static const String homeScreen = '/';
+  static const String initialScreen = '/';
+  static const String homeScreen = '/home';
 }

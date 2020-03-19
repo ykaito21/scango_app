@@ -47,13 +47,13 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             appBar: AppBar(
-              title: Text(
-                'ScanGo',
-                style: TextStyle(
-                  fontSize: 40.0,
-                  fontFamily: 'Lobster',
-                ),
-              ),
+              // title: Text(
+              //   'ScanGo',
+              //   style: TextStyle(
+              //     fontSize: 40.0,
+              //     fontFamily: 'Lobster',
+              //   ),
+              // ),
               // leading: Builder(
               //   builder: (context) {
               //     return IconButton(

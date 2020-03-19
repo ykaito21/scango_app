@@ -1,0 +1,133 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:scango_app/src/ui/shared/widgets/base_app_bar.dart';
+import '../../core/providers/auth_screen_provider.dart';
+import '../global/style_list.dart';
+import '../global/extensions.dart';
+import '../shared/widgets/auth_button.dart';
+import '../shared/widgets/base_flat_button.dart';
+import '../shared/platform/platform_exception_alert_dialog.dart';
+import '../widgets/email_auth_card.dart';
+import '../widgets/phone_auth_card.dart';
+
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({Key key}) : super(key: key);
+
+  Future<void> _onPressedAuth(BuildContext context, String selectedAuth,
+      AuthScreenProvider authScreenProvider) async {
+    try {
+      await authScreenProvider.submitThirdPartyAuth(selectedAuth);
+    } catch (e) {
+      if (e.code != 'ERROR_ABORTED_BY_USER' &&
+          // e.code != 'sign_in_canceled' &&
+          e.code != 'ERROR_AUTHORIZATION_DENIED') {
+        PlatformExceptionAlertDialog(
+          title: authScreenProvider.authTypeSignUp
+              ? context.translate('signUpFailed')
+              : context.translate('logInFailed'),
+          exception: e,
+          context: context,
+        ).show(context);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AuthScreenProvider>(
+      create: (context) => AuthScreenProvider(),
+      child: Consumer<AuthScreenProvider>(
+        builder: (context, authScreenProvider, child) {
+          final authTypeSignUp = authScreenProvider.authTypeSignUp;
+          final showEmailForm = authScreenProvider.showEmailForm;
+          final showPhoneForm = authScreenProvider.showPhoneForm;
+          return Scaffold(
+            appBar: BaseAppBar(),
+            body: ModalProgressHUD(
+              inAsyncCall: authScreenProvider.isBusy,
+              child: Padding(
+                padding: StyleList.horizontalPadding10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Visibility(
+                      visible: !showEmailForm && !showPhoneForm,
+                      child: Column(
+                        children: <Widget>[
+                          AuthButton(
+                            onPressed: () => _onPressedAuth(
+                                context, 'Google', authScreenProvider),
+                            buttonText: authTypeSignUp
+                                ? context.translate('signUpWithGoogle')
+                                : context.translate('logInWithGoogle'),
+                            buttonIcon: Icon(
+                              FontAwesomeIcons.google,
+                              color: context.primaryColor,
+                            ),
+                          ),
+                          if (Platform.isIOS)
+                            AuthButton(
+                              onPressed: () => _onPressedAuth(
+                                  context, 'Apple', authScreenProvider),
+                              buttonText: authTypeSignUp
+                                  ? context.translate('signUpWithApple')
+                                  : context.translate('logInWithApple'),
+                              buttonIcon: Icon(
+                                FontAwesomeIcons.apple,
+                                color: context.primaryColor,
+                              ),
+                            ),
+                          AuthButton(
+                            onPressed: authScreenProvider.toggleShowEmailForm,
+                            buttonText: authTypeSignUp
+                                ? context.translate('signUpWithEmail')
+                                : context.translate('logInWithEmail'),
+                            buttonIcon: Icon(
+                              FontAwesomeIcons.envelope,
+                              color: context.primaryColor,
+                            ),
+                          ),
+                          AuthButton(
+                            onPressed: authScreenProvider.toggleShowPhoneForm,
+                            buttonText: authTypeSignUp
+                                ? context.translate('signUpWithPhoneNumber')
+                                : context.translate('logInWithPhoneNumber'),
+                            buttonIcon: Icon(
+                              FontAwesomeIcons.mobileAlt,
+                              color: context.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: showEmailForm && !showPhoneForm,
+                      child: EmailAuthCard(),
+                    ),
+                    //TODO Phone Authentication requires additional configuration steps
+                    Visibility(
+                      visible: showPhoneForm,
+                      child: PhoneAuthCard(),
+                    ),
+                    Visibility(
+                      visible: !showEmailForm && !showPhoneForm,
+                      child: BaseFlatButton(
+                        buttonText: authTypeSignUp
+                            ? context.translate('orLogIn')
+                            : context.translate('orSignUp'),
+                        onPressed: authScreenProvider.toggleAuthType,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
