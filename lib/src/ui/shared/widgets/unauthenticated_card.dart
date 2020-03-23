@@ -15,8 +15,11 @@ class UnauthenticatedCard extends StatelessWidget {
       padding: StyleList.allPadding10,
       child: BaseButton(
         buttonText: context.translate('signupOrLogin'),
+        //* if there is initial screen
+        // onPressed: () =>
+        //     context.pushNamed(RoutePath.initialScreen, rootNavigator: true),
         onPressed: () =>
-            context.pushNamed(RoutePath.initialScreen, rootNavigator: true),
+            context.pushNamed(RoutePath.authScreen, rootNavigator: true),
       ),
     );
   }

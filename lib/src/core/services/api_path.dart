@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class ApiPath {
+  static String stores() => 'stores';
+  static String store(String storeId) => 'stores/$storeId';
   static String categories() => 'categories';
   static String products() => 'products';
   static String user({@required String userId}) => 'users/$userId';

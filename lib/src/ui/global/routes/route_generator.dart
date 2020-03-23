@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../screens/initial_screen.dart';
+import '../../screens/auth_screen.dart';
+// import '../../screens/initial_screen.dart';
 import '../../screens/home_screen.dart';
 import '../style_list.dart';
 import '../extensions.dart';
@@ -9,10 +10,16 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case RoutePath.initialScreen:
-        return MaterialPageRoute(builder: (context) => InitialScreen());
+      //* if you want to check auth before anything
+      // case RoutePath.initialScreen:
+      //   return MaterialPageRoute(builder: (context) => InitialScreen());
       case RoutePath.homeScreen:
         return MaterialPageRoute(builder: (context) => HomeScreen());
+      case RoutePath.authScreen:
+        return MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => AuthScreen(),
+        );
       // case RoutePath.writeMealScreen:
       // if (args is MealWithTags) {
       // return MaterialPageRoute(

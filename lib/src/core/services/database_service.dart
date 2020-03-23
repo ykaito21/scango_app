@@ -7,6 +7,10 @@ class DatabaseService {
   final _db = Firestore.instance;
   // factory DatabaseService() => instance;
 
+// for geofire
+  CollectionReference getCollectionReference(String path) =>
+      _db.collection(path);
+
 // CREATE
   Future<void> createDocument({
     @required String path,
