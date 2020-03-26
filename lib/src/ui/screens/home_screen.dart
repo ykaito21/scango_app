@@ -3,26 +3,24 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/store_model.dart';
-import '../../core/providers/store_provider.dart';
-import '../../core/providers/home_screen_provider.dart';
+import '../../core/providers/app_providers/store_provider.dart';
+import '../../core/providers/screen_providers/home_screen_provider.dart';
 import '../global/routes/route_generator.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
-import '../shared/widgets/stream_wrapper.dart';
+import 'featured_products_screen.dart';
+import 'cart_screen.dart';
+import 'loading_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamWrapper<List<StoreModel>>(
-      stream: context.provider<StoreProvider>().streamStores,
-      onError: (context, _) => errorInitialStore(context),
-      onWaitting: (context) => waittingInitialStore(),
-      onSuccess: (context, stores) {
-        if (stores.isEmpty) return waittingInitialStore();
-        final store = stores.first;
+    return Consumer<StoreProvider>(
+      builder: (context, storeProvider, child) {
+        if (storeProvider.currentStore == null) return LoadingScreen();
+        final store = storeProvider.currentStore;
         return Provider<HomeScreenProvider>(
           create: (context) => HomeScreenProvider(),
           dispose: (context, homeScreenProvider) =>
@@ -87,9 +85,9 @@ class HomeScreen extends StatelessWidget {
                         builder: (context) {
                           switch (index) {
                             case 0:
-                              return Container();
+                              return FeaturedProductsScreen();
                             case 1:
-                              return Container();
+                              return CartScreen();
                             default:
                               return Container();
                           }
@@ -143,13 +141,6 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
-
-  Widget errorInitialStore(BuildContext context) => Scaffold(
-      body:
-          Center(child: StyleList.errorViewState(context.translate('error'))));
-
-  Widget waittingInitialStore() =>
-      Scaffold(body: Center(child: StyleList.loadingViewState()));
 }
 
 class CustomSearchDelegate extends SearchDelegate {

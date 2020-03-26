@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
-import '../../core/providers/auth_screen_provider.dart';
+import '../../core/providers/screen_providers/auth_screen_provider.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
 import '../shared/widgets/base_button.dart';

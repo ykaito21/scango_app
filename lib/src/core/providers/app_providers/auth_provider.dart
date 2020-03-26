@@ -3,7 +3,7 @@ import 'package:scango_app/src/core/models/user_model.dart';
 import 'package:scango_app/src/core/providers/base_provider.dart';
 import 'package:scango_app/src/core/services/api_path.dart';
 import 'package:scango_app/src/core/services/database_service.dart';
-import '../services/auth_service.dart';
+import '../../services/auth_service.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 

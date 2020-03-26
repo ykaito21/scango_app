@@ -3,6 +3,12 @@ import 'package:flutter/foundation.dart';
 class ApiPath {
   static String stores() => 'stores';
   static String store(String storeId) => 'stores/$storeId';
+  static String storePromotions(String storeId) => 'stores/$storeId/promotions';
+  // static String storePromotionProducts(String storeId, String promotionId) =>
+  //     'stores/$storeId/promotions/$promotionId/products';
+  static String storeFeaturedProducts(String storeId) =>
+      'stores/$storeId/featuredProducts';
+
   static String categories() => 'categories';
   static String products() => 'products';
   static String user({@required String userId}) => 'users/$userId';

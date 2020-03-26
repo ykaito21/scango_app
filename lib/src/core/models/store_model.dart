@@ -21,6 +21,15 @@ class StoreModel extends Equatable {
         assert(position != null);
 
   factory StoreModel.fromFirestore(Map snapshot, String id) {
+    //* what is the best way to handle null
+    // if (snapshot == null)
+    //   return StoreModel(
+    //     id: id ?? '',
+    //     name: '',
+    //     brand: '',
+    //     category: '',
+    //     position: {},
+    //   );
     return StoreModel(
       id: id ?? '',
       name: snapshot['name'] ?? '',

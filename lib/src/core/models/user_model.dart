@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class UserModel extends Equatable {
-  //* need other info like address, recently selected stores, default store, what eles with the same model or different model like address model
+  //* need other info like, date of birth, gender address, recently selected stores, default store, what eles with the same model or different model like address model
   final String id;
   final String firstName;
   final String lastName;

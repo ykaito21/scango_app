@@ -36,22 +36,22 @@ class DatabaseService {
   }
 
 // READ
-  // Future<QuerySnapshot> getDataCollection({
-  //   @required String path,
-  //   String orderBy = '',
-  //   bool descending = false,
-  // }) async {
-  //   try {
-  //     if (orderBy.isEmpty) return await _db.collection(path).getDocuments();
-  //     return await _db
-  //         .collection(path)
-  //         .orderBy(orderBy, descending: descending)
-  //         .getDocuments();
-  //   } catch (e) {
-  //     print(e);
-  //     rethrow;
-  //   }
-  // }
+  Future<QuerySnapshot> getDataCollection({
+    @required String path,
+    String orderBy = '',
+    bool descending = false,
+  }) async {
+    try {
+      if (orderBy.isEmpty) return await _db.collection(path).getDocuments();
+      return await _db
+          .collection(path)
+          .orderBy(orderBy, descending: descending)
+          .getDocuments();
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 
   Stream<QuerySnapshot> streamDataCollection({
     @required String path,
