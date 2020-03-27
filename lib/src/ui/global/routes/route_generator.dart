@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../core/models/product_model.dart';
 import '../../screens/auth_screen.dart';
 // import '../../screens/initial_screen.dart';
 import '../../screens/home_screen.dart';
+import '../../screens/product_detail_screen.dart';
 import '../style_list.dart';
 import '../extensions.dart';
 import 'route_path.dart';
@@ -20,6 +22,15 @@ class RouteGenerator {
           fullscreenDialog: true,
           builder: (context) => AuthScreen(),
         );
+      case RoutePath.productDetailScreen:
+        if (args is ProductModel) {
+          return MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(
+              productItem: args,
+            ),
+          );
+        }
+        return _errorRoute();
       // case RoutePath.writeMealScreen:
       // if (args is MealWithTags) {
       // return MaterialPageRoute(

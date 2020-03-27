@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scango_app/src/ui/global/routes/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../core/providers/app_providers/product_provider.dart';
 import '../global/extensions.dart';
@@ -61,7 +62,11 @@ class FeaturedProductList extends StatelessWidget {
                 final isSale =
                     featuredProduct.price != featuredProduct.originalPrice;
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () => context.pushNamed(
+                    RoutePath.productDetailScreen,
+                    arguments: featuredProduct,
+                    rootNavigator: true,
+                  ),
                   child: Container(
                     height: 100.0,
                     padding: StyleList.horizontalPadding10,
