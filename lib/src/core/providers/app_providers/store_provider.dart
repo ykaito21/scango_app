@@ -15,14 +15,14 @@ class StoreProvider extends BaseProvider {
   final _geoFire = Geoflutterfire();
   StoreModel _sampleStore =
       StoreModel(id: '', name: '', brand: '', category: '', position: {});
-  StoreModel _currentStore;
+  StoreModel _store;
   List<StoreModel> _stores = [];
-  StoreModel get currentStore => _currentStore;
+  StoreModel get store => _store;
   List<StoreModel> get stores => [..._stores];
 
   void _setStore(StoreModel value) {
-    if (_currentStore != value) {
-      _currentStore = value;
+    if (_store != value) {
+      _store = value;
       notifyListeners();
     }
   }

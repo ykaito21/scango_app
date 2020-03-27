@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-// import 'package:shimmer/shimmer.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../core/providers/app_providers/promotion_provider.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
@@ -16,21 +16,21 @@ class PromotionSlider extends StatelessWidget {
     return Container(
       height: 250.0,
       child: promotionList.isEmpty
-          ? null
-          // ? CarouselSlider.builder(
-          //     itemCount: 3,
-          //     itemBuilder: (BuildContext context, int itemIndex) {
-          //       return Shimmer.fromColors(
-          //         baseColor: context.accentColor.withOpacity(0.5),
-          //         highlightColor: Colors.grey[100],
-          //         child: Container(
-          //           margin: const EdgeInsets.symmetric(horizontal: 5.0),
-          //           height: 200.0,
-          //           color: context.accentColor.withOpacity(0.5),
-          //         ),
-          //       );
-          //     },
-          //   )
+          // ? null
+          ? CarouselSlider.builder(
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int itemIndex) {
+                return Shimmer.fromColors(
+                  baseColor: context.accentColor.withOpacity(0.5),
+                  highlightColor: Colors.grey[100],
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    height: 200.0,
+                    color: context.accentColor.withOpacity(0.5),
+                  ),
+                );
+              },
+            )
           : CarouselSlider.builder(
               // enlargeCenterPage: true,
               itemCount: promotionList.length,

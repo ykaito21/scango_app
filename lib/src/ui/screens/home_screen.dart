@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scango_app/src/core/models/cart_model.dart';
+import 'package:scango_app/src/core/providers/app_providers/cart_provider.dart';
 import '../../core/providers/app_providers/store_provider.dart';
 import '../../core/providers/screen_providers/home_screen_provider.dart';
 import '../global/routes/route_generator.dart';
@@ -17,10 +20,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.provider<CartProvider>();
     return Consumer<StoreProvider>(
       builder: (context, storeProvider, child) {
-        if (storeProvider.currentStore == null) return LoadingScreen();
-        final store = storeProvider.currentStore;
+        if (storeProvider.store == null) return LoadingScreen();
+        final store = storeProvider.store;
         return Provider<HomeScreenProvider>(
           create: (context) => HomeScreenProvider(),
           dispose: (context, homeScreenProvider) =>
@@ -109,8 +113,22 @@ class HomeScreen extends StatelessWidget {
                           icon: Icon(Icons.home),
                           // title: Text('Home'),
                         ),
+                        //! bug need to fix flickering with streamBuilder when tab change
                         BottomNavigationBarItem(
-                          icon: Icon(Icons.shopping_cart),
+                          icon: StreamBuilder<List<CartModel>>(
+                            stream: cartProvider.streamCart,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data.isNotEmpty)
+                                return Badge(
+                                  badgeColor: context.accentColor,
+                                  toAnimate: false,
+                                  badgeContent:
+                                      _badgeText(context, snapshot.data.length),
+                                  child: Icon(Icons.shopping_cart),
+                                );
+                              return Icon(Icons.shopping_cart);
+                            },
+                          ),
                         ),
                       ],
                       onTap: (index) {
@@ -139,6 +157,16 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _badgeText(BuildContext context, int quantity) {
+    return Text(
+      '$quantity',
+      style: TextStyle(
+        color: context.primaryColor,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

@@ -20,6 +20,7 @@ class AuthScreen extends StatelessWidget {
       AuthScreenProvider authScreenProvider) async {
     try {
       await authScreenProvider.submitThirdPartyAuth(selectedAuth);
+      context.pop();
     } catch (e) {
       if (e.code != 'ERROR_ABORTED_BY_USER' &&
           // e.code != 'sign_in_canceled' &&
@@ -45,7 +46,14 @@ class AuthScreen extends StatelessWidget {
           final showEmailForm = authScreenProvider.showEmailForm;
           final showPhoneForm = authScreenProvider.showPhoneForm;
           return Scaffold(
-            appBar: BaseAppBar(),
+            appBar: AppBar(
+              title: Text(
+                authTypeSignUp
+                    ? context.translate('signUp')
+                    : context.translate('logIn'),
+                style: StyleList.baseSubtitleTextStyle,
+              ),
+            ),
             body: ModalProgressHUD(
               inAsyncCall: authScreenProvider.isBusy,
               child: Padding(

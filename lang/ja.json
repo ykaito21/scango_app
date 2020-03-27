@@ -1,5 +1,7 @@
 {
   "recommendedToYou": "あなたにおすすめ",
+  "alertConfirmTitleCart": "カートの確認",
+  "alertConfirmContentCart": "実際の商品とカートの中身は同じですか？",
   "musubitate": "むすびたて",
   "addToCart": "カートに追加",
   "signUp": "登録",

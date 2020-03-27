@@ -8,6 +8,13 @@ class ApiPath {
   //     'stores/$storeId/promotions/$promotionId/products';
   static String storeFeaturedProducts(String storeId) =>
       'stores/$storeId/featuredProducts';
+  static String storeCart(String userId, String storeId) =>
+      'users/$userId/stores/$storeId/cart';
+  static String storeCartItem(
+          String userId, String storeId, String cartItemId) =>
+      'users/$userId/stores/$storeId/cart/$cartItemId';
+  static String storeOrders(String userId, String storeId) =>
+      'users/$userId/stores/$storeId/orders';
 
   static String categories() => 'categories';
   static String products() => 'products';

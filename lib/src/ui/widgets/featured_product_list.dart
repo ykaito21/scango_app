@@ -70,6 +70,8 @@ class FeaturedProductList extends StatelessWidget {
                   child: Container(
                     height: 100.0,
                     padding: StyleList.horizontalPadding10,
+                    //* to work with onTap
+                    color: Colors.transparent,
                     child: Row(
                       children: <Widget>[
                         Container(

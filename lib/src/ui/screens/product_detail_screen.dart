@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scango_app/src/core/providers/app_providers/auth_provider.dart';
+import 'package:scango_app/src/core/providers/app_providers/cart_provider.dart';
 import '../../core/models/product_model.dart';
 import '../../core/providers/screen_providers/product_detail_screen_provider.dart';
 // import '../../core/providers/cart_provider.dart';
@@ -25,14 +27,14 @@ class ProductDetailScreen extends StatelessWidget {
       ProductModel productItem,
       ProductDetailScreenProvider productDetailScreenProvider) async {
     final quantity = productDetailScreenProvider.quantity;
-    final currentUser = context.provider<FirebaseUser>();
+    final currentUser = context.provider<AuthProvider>().user;
     if (currentUser == null) {
       context.pushNamed(RoutePath.authScreen, rootNavigator: true);
     } else {
       try {
-        // await context
-        //     .provider<CartProvider>()
-        //     .addCartItem(productItem: productItem, quantity: quantity);
+        await context
+            .provider<CartProvider>()
+            .addCartItem(productItem: productItem, quantity: quantity);
         //* optional
         // Scaffold.of(context)
         //   ..removeCurrentSnackBar()
@@ -41,6 +43,7 @@ class ProductDetailScreen extends StatelessWidget {
         //       context.localizeMessage(productItem.name, 'isAdded'),
         //     ),
         //   );
+        context.pop();
       } catch (e) {
         PlatformExceptionAlertDialog(
           title: context.translate('error'),
