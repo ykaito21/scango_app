@@ -4,13 +4,14 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scango_app/src/core/models/cart_model.dart';
-import 'package:scango_app/src/core/providers/app_providers/cart_provider.dart';
+import '../../core/models/cart_model.dart';
+import '../../core/providers/app_providers/cart_provider.dart';
 import '../../core/providers/app_providers/store_provider.dart';
 import '../../core/providers/screen_providers/home_screen_provider.dart';
 import '../global/routes/route_generator.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
+import '../widgets/main_drawer.dart';
 import 'featured_products_screen.dart';
 import 'cart_screen.dart';
 import 'loading_screen.dart';
@@ -50,32 +51,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                drawer: Drawer(
-                  child: ListView(
-                    // Important: Remove any padding from the ListView.
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      DrawerHeader(
-                        child: Text('Drawer Header'),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                        ),
-                      ),
-                      ListTile(
-                        title: Text('Item 1'),
-                        onTap: () {
-                          // context.provider<StoreProvider>().setLocation();
-                        },
-                      ),
-                      ListTile(
-                        title: Text('Item 2'),
-                        onTap: () {
-                          // context.provider<StoreProvider>().getStore();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                drawer: MainDrawer(),
                 body: WillPopScope(
                   onWillPop: () async => !await homeScreenProvider
                       .navigators[homeScreenProvider.currentIndex].currentState
