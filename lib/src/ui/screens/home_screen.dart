@@ -4,6 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scango_app/src/core/models/store_model.dart';
 import '../../core/models/cart_model.dart';
 import '../../core/providers/app_providers/cart_provider.dart';
 import '../../core/providers/app_providers/store_provider.dart';
@@ -22,10 +23,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.provider<CartProvider>();
-    return Consumer<StoreProvider>(
-      builder: (context, storeProvider, child) {
-        if (storeProvider.store == null) return LoadingScreen();
-        final store = storeProvider.store;
+    return Selector<StoreProvider, StoreModel>(
+      selector: (context, storeProvider) => storeProvider.store,
+      builder: (context, store, child) {
+        if (store == null) return LoadingScreen();
         return Provider<HomeScreenProvider>(
           create: (context) => HomeScreenProvider(),
           dispose: (context, homeScreenProvider) =>

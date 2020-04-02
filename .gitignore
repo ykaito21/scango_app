@@ -40,4 +40,7 @@ lib/generated_plugin_registrant.dart
 /lib/src/ui/widgets/import.dart
 /lib/todos.dart
 ios/Runner/GoogleService-Info.plist
+ios/Runner/KeyManager.swift
+ios/Runner/APIKey.plist
 android/app/google-services.json
+android/app/src/main/res/values/keys.xml

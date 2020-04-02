@@ -166,18 +166,39 @@ class CartProvider extends BaseProvider {
       status: 'PENDING',
       cart: cart,
     );
+    // get all cart items path
+    final pathList = cart
+        .map((cartItem) => ApiPath.storeCartItem(
+            _currentUser.id, _currentStore.id, cartItem.id))
+        .toList();
+
+    // get all recent stores and update
+    //* createdAt can be added
+    List<StoreModel> recentStores = _currentUser.recentStores;
+    if (recentStores.contains(_currentStore)) {
+      recentStores.remove(_currentStore);
+      recentStores.add(_currentStore);
+    } else {
+      if (recentStores.length > 5) {
+        recentStores.removeAt(0);
+        recentStores.add(_currentStore);
+      } else {
+        recentStores.add(_currentStore);
+      }
+    }
+    final convertedList = recentStores.map((store) => store.toMap()).toList();
     try {
       // add order
       await _dbService.addDocument(
         path: ApiPath.storeOrders(_currentUser.id, _currentStore.id),
         data: newOrder.toMapForFirestore(),
       );
-      // get all cart items path
-      final pathList = cart
-          .map((cartItem) => ApiPath.storeCartItem(
-              _currentUser.id, _currentStore.id, cartItem.id))
-          .toList();
+      // add current store to recent stores of user record
+      await _dbService.updateDocument(
+          path: ApiPath.user(_currentUser.id),
+          data: {"recentStores": convertedList});
       // remove all cart items with transaction
+      //* need this to be last for ui
       await _dbService.removeAllDocument(pathList: pathList);
       setViewState(ViewState.Retrieved);
       return code;

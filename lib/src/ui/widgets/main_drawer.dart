@@ -43,7 +43,8 @@ class MainDrawer extends StatelessWidget {
           DrawerTile(
             icon: Icons.store,
             titleText: context.translate('editStore'),
-            onTap: () {},
+            onTap: () =>
+                Navigator.pushNamed(context, RoutePath.storeEditScreen),
           ),
           if (!unauthenticated) ...[
             DrawerTile(

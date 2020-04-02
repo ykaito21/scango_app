@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:scango_app/src/ui/screens/account_settings_screen.dart';
+
 import '../../../core/models/product_model.dart';
 import '../../screens/auth_screen.dart';
 // import '../../screens/initial_screen.dart';
 import '../../screens/home_screen.dart';
 import '../../screens/product_detail_screen.dart';
+import '../../screens/account_settings_screen.dart';
+import '../../screens/store_edit_screen.dart';
 import '../style_list.dart';
 import '../extensions.dart';
 import 'route_path.dart';
@@ -35,6 +37,10 @@ class RouteGenerator {
       case RoutePath.accountSettingsScreen:
         return MaterialPageRoute(
           builder: (context) => AccountSettingsScreen(),
+        );
+      case RoutePath.storeEditScreen:
+        return MaterialPageRoute(
+          builder: (context) => StoreEditScreen(),
         );
 
       default:

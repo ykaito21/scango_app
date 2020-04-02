@@ -79,12 +79,13 @@ class CartList extends StatelessWidget {
           ),
         ).show(context);
       } catch (e) {
-        if (e.code != 'cancelled')
-          PlatformExceptionAlertDialog(
-            title: context.translate('error'),
-            exception: e,
-            context: context,
-          ).show(context);
+        print(e);
+        // if (e.code != 'cancelled')
+        // PlatformExceptionAlertDialog(
+        //   title: context.translate('error'),
+        //   exception: e,
+        //   context: context,
+        // ).show(context);
       }
     }
   }

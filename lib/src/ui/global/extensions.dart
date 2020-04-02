@@ -23,6 +23,7 @@ extension ContextExtensions on BuildContext {
       ? Colors.black
       : Colors.white;
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
+  Color get captionColor => Theme.of(this).textTheme.caption.color;
 
 // Device Size
   double get height => MediaQuery.of(this).size.height;
@@ -49,14 +50,25 @@ extension ContextExtensions on BuildContext {
     }
   }
 
-  String localizeAlertTtile(String content, String key) {
-    switch (this.lang) {
-      case 'en':
-        return '${this.translate(key)} "$content"${this.translate('questionMark')}';
-      case 'ja':
-        return '"$content"${this.translate(key)}${this.translate('questionMark')}';
-      default:
-        return '${this.translate(key)} "$content"${this.translate('questionMark')}';
+  String localizeAlertTtile(String content, String key, {String secondKey}) {
+    if (secondKey != null) {
+      switch (this.lang) {
+        case 'en':
+          return '${this.translate(key)} "$content"${' ' + this.translate(secondKey)}${this.translate('questionMark')}';
+        case 'ja':
+          return '"$content"${this.translate(secondKey)}${this.translate(key)}${this.translate('questionMark')}';
+        default:
+          return '${this.translate(key)} "$content"${' ' + this.translate(secondKey)}${this.translate('questionMark')}';
+      }
+    } else {
+      switch (this.lang) {
+        case 'en':
+          return '${this.translate(key)} "$content"${this.translate('questionMark')}';
+        case 'ja':
+          return '"$content"${this.translate(key)}${this.translate('questionMark')}';
+        default:
+          return '${this.translate(key)} "$content"${' ' + this.translate(secondKey)}${this.translate('questionMark')}';
+      }
     }
   }
 

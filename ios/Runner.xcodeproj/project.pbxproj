@@ -10,6 +10,8 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		2E832E9C241F9793009520F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E832E9E241F9793009520F0 /* InfoPlist.strings */; };
 		2E832EA62420DB2A009520F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E832EA52420DB2A009520F0 /* GoogleService-Info.plist */; };
+		2ED87897243111E400CD0A87 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED87896243111E400CD0A87 /* KeyManager.swift */; };
+		2ED878992431125F00CD0A87 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2ED878982431125F00CD0A87 /* APIKey.plist */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -48,6 +50,8 @@
 		2E832EA1241F97EB009520F0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2E832EA2241F97EC009520F0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2E832EA52420DB2A009520F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2ED87896243111E400CD0A87 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		2ED878982431125F00CD0A87 /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		5CD9872444AAC136F2099820 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
@@ -86,7 +90,6 @@
 				5CD9872444AAC136F2099820 /* Pods-Runner.release.xcconfig */,
 				2A9A7482C9E8C24E714B1E06 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -137,6 +140,8 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				2E832E9E241F9793009520F0 /* InfoPlist.strings */,
+				2ED87896243111E400CD0A87 /* KeyManager.swift */,
+				2ED878982431125F00CD0A87 /* APIKey.plist */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				2ED878992431125F00CD0A87 /* APIKey.plist in Resources */,
 				2E832E9C241F9793009520F0 /* InfoPlist.strings in Resources */,
 				2E832EA62420DB2A009520F0 /* GoogleService-Info.plist in Resources */,
 			);
@@ -323,6 +329,7 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				2ED87897243111E400CD0A87 /* KeyManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

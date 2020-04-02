@@ -16,9 +16,10 @@ class ApiPath {
   static String storeOrders(String userId, String storeId) =>
       'users/$userId/stores/$storeId/orders';
 
+  static String user(userId) => 'users/$userId';
+
   static String categories() => 'categories';
   static String products() => 'products';
-  static String user({@required String userId}) => 'users/$userId';
   static String cart({@required String userId}) => 'users/$userId/cart';
   static String cartItem(
           {@required String userId, @required String cartItemId}) =>

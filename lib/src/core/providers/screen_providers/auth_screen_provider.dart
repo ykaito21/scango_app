@@ -50,7 +50,7 @@ class AuthScreenProvider extends BaseProvider with ValidationMixin {
   Future<void> _createNewUser(String userId) async {
     try {
       // maybe need to check userId is not null
-      await _dbService.createDocument(path: ApiPath.user(userId: userId));
+      await _dbService.createDocument(path: ApiPath.user(userId));
     } catch (e) {
       print(e);
       rethrow;

@@ -30,8 +30,9 @@ class AuthProvider extends BaseProvider {
         _status = Status.Unauthenticated;
       } else {
         final doc = await _dbService.getDocumentById(
-          path: ApiPath.user(userId: firebaseUser.uid),
+          path: ApiPath.user(firebaseUser.uid),
         );
+        //! this way can't detect user model update without refresh
         _user = UserModel.fromFirestore(doc.data, doc.documentID);
         _status = Status.Authenticated;
       }

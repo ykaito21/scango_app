@@ -15,7 +15,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //* could be consumer and listen change but changing tab rebuild screen anyway
     return context.provider<AuthProvider>(listen: true).user == null
-        ? UnauthenticatedCard()
+        //* need column for not expanding container if no scaffold
+        ? Column(children: <Widget>[UnauthenticatedCard()])
         : StreamWrapper<List<CartModel>>(
             stream: context.provider<CartProvider>().streamCart,
             onError: (context, _) =>

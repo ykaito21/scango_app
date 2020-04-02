@@ -39,6 +39,36 @@ class StoreModel extends Equatable {
     );
   }
 
+  // Map<String, dynamic> toMapForeFirestore() {
+  //   return {
+  //     // "id": id,
+  //     "name": name,
+  //     "brand": brand,
+  //     "category": category,
+  //     "position": position,
+  //   };
+  // }
+
+  factory StoreModel.fromMap(Map data) {
+    return StoreModel(
+      id: data['id'] ?? '',
+      name: data['name'] ?? '',
+      brand: data['brand'] ?? '',
+      category: data['category'] ?? '',
+      position: data['position'] ?? {},
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "brand": brand,
+      "category": category,
+      "position": position,
+    };
+  }
+
   @override
   List<Object> get props => [id, name, brand, category, position];
 

@@ -1,24 +1,34 @@
 import 'dart:async';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/store_model.dart';
 import '../../services/api_path.dart';
 import '../../services/database_service.dart';
 import '../../services/secrets.dart';
+import '../../services/location_service.dart';
 import '../base_provider.dart';
 
 class StoreProvider extends BaseProvider {
   final _dbService = DatabaseService.instance;
-  final _geolocator = Geolocator();
-  final _geoFire = Geoflutterfire();
+  final _locationService = LocationService.instance;
   StoreModel _sampleStore =
       StoreModel(id: '', name: '', brand: '', category: '', position: {});
   StoreModel _store;
   List<StoreModel> _stores = [];
   StoreModel get store => _store;
   List<StoreModel> get stores => [..._stores];
+
+  // default store
+  StoreModel _defaultStore;
+  StoreModel get defaultStore => _defaultStore;
+
+  // location
+  Position _currentLocation;
+  Position get currentLocation => _currentLocation;
 
   void _setStore(StoreModel value) {
     if (_store != value) {
@@ -32,41 +42,69 @@ class StoreProvider extends BaseProvider {
   }
 
   Future<void> initStore() async {
-    await getSampleStore();
-    final currentLocation = await _getCurrentLocation();
-    getStore(currentLocation);
+    _currentLocation = await _locationService.getCurrentLocation();
+    await getDefaultStore();
+    getStore(_currentLocation);
   }
 
-  Future<Position> _getCurrentLocation() async {
+  Future<void> getDefaultStore() async {
     try {
-      return await _geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
+      final prefs = await SharedPreferences.getInstance();
+      final defaultStoreId = prefs.getString('defaultStoreId');
+      if (defaultStoreId != null) {
+        //! need to check doc is not null
+        final doc = await _dbService.getDocumentById(
+            path: ApiPath.store(defaultStoreId));
+        _defaultStore = StoreModel.fromFirestore(doc.data, doc.documentID);
+      }
     } catch (e) {
       print(e);
-      return null;
+    }
+  }
+
+  Future<void> changeDefaultStore(StoreModel newDefault) async {
+    _defaultStore = newDefault;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('defaultStoreId', _defaultStore.id);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 
   Future<void> getSampleStore() async {
     try {
+      //! need to check doc is not null
       final doc = await _dbService.getDocumentById(
           path: ApiPath.store(Secrets.defaultStoreId));
-      _sampleStore = StoreModel.fromFirestore(doc.data, doc.documentID);
+      final sampleStore = StoreModel.fromFirestore(doc.data, doc.documentID);
+      if (sampleStore != null) _sampleStore = sampleStore;
     } catch (e) {
       print(e);
     }
   }
 
+  void initStoreWithoutPosition() {
+    if (_defaultStore != null) {
+      _setStore(_defaultStore);
+    } else {
+      _setStore(_sampleStore);
+    }
+  }
+
+  Stream<List<DocumentSnapshot>> _streamStores(GeoFirePoint center) {
+    return _locationService.geoFire
+        .collection(collectionRef: _dbService.getCollectionReference('stores'))
+        .within(center: center, radius: 0.1, field: 'position');
+  }
+
   Future<void> getStore(Position position) async {
     if (position != null) {
-      final center = _geoFire.point(
-          latitude: position.latitude, longitude: position.longitude);
-      final res = await _geoFire
-          .collection(
-              collectionRef: _dbService.getCollectionReference('stores'))
-          .within(center: center, radius: 0.1, field: 'position')
-          .first
-          .catchError((e) {
+      final center = _locationService.geoFire
+          .point(latitude: position.latitude, longitude: position.longitude);
+      final res = await _streamStores(center).first.catchError((e) {
         print(e);
         return [];
       });
@@ -77,7 +115,7 @@ class StoreProvider extends BaseProvider {
       if (stores.isNotEmpty) {
         _setStore(storeData.first);
       } else {
-        _setStore(_sampleStore);
+        initStoreWithoutPosition();
       }
       //* with stream subscription
       // StreamSubscription<List<DocumentSnapshot>> streamDocs;
@@ -93,12 +131,21 @@ class StoreProvider extends BaseProvider {
       //   if (stores.isNotEmpty) {
       //     _setStore(storeData.first);
       //   } else {
-      //     _setStore(sampleStore);
+      //    initStoreWithoutPosition();
       //   }
       //   streamDocs.cancel();
       // });
     } else {
-      _setStore(_sampleStore);
+      initStoreWithoutPosition();
     }
+  }
+
+  void chnageStore(StoreModel newStore) {
+    _setStore(newStore);
+  }
+
+  void updateLocation(Position newPosition) {
+    // don't need notifyListeners
+    _currentLocation = newPosition;
   }
 }
