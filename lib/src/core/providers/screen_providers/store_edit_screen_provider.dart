@@ -74,17 +74,16 @@ class StoreEditScreenProvider extends BaseProvider {
         .debounceTime(Duration(milliseconds: 500))
         .map((latlong) => _locationService.geoFire
             .point(latitude: latlong.latitude, longitude: latlong.longitude))
-        .listen((center) {
-      _locationService.geoFire
+        .switchMap((center) {
+      return _locationService.geoFire
           .collection(
               collectionRef: _dbService.getCollectionReference('stores'))
-          .within(center: center, radius: 0.1, field: 'position')
-          .listen((data) {
-        final storeData = data
-            .map((doc) => StoreModel.fromFirestore(doc.data, doc.documentID))
-            .toList();
-        _mapStoresSubject.add(storeData);
-      });
+          .within(center: center, radius: 0.1, field: 'position');
+    }).listen((data) {
+      final storeData = data
+          .map((doc) => StoreModel.fromFirestore(doc.data, doc.documentID))
+          .toList();
+      _mapStoresSubject.add(storeData);
     });
   }
 }
