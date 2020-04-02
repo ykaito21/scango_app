@@ -49,6 +49,7 @@ class StoreEditScreenProvider extends BaseProvider {
   }
 
   Future<void> setCustomMapPin() async {
+    //! cannt change icon size
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5, size: Size(1.0, 1.0)),
       'assets/images/pin.png',
