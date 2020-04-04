@@ -4,7 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scango_app/src/core/models/store_model.dart';
+import '../../core/models/store_model.dart';
 import '../../core/models/cart_model.dart';
 import '../../core/providers/app_providers/cart_provider.dart';
 import '../../core/providers/app_providers/store_provider.dart';
@@ -13,6 +13,7 @@ import '../global/routes/route_generator.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
 import '../widgets/main_drawer.dart';
+import '../widgets/store_product_search_delegate.dart';
 import 'featured_products_screen.dart';
 import 'cart_screen.dart';
 import 'loading_screen.dart';
@@ -42,12 +43,9 @@ class HomeScreen extends StatelessWidget {
                   centerTitle: true,
                   actions: <Widget>[
                     IconButton(
-                      onPressed: () {
-                        showSearch(
+                      onPressed: () => showSearch(
                           context: context,
-                          delegate: CustomSearchDelegate(),
-                        );
-                      },
+                          delegate: StoreProductSearchDelegate()),
                       icon: Icon(Icons.search),
                     ),
                   ],
@@ -145,42 +143,5 @@ class HomeScreen extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
     );
-  }
-}
-
-class CustomSearchDelegate extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.clear),
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return Container();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    return Text('search');
   }
 }

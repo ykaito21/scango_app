@@ -32,4 +32,19 @@ class ProductProvider extends BaseProvider {
       print(e);
     }
   }
+
+  List<ProductModel> searchProductList(String query) {
+    //* could be adding search from all products with keyword subject, switchMap and stream
+    List<ProductModel> matchedProductList = [];
+    final keywords = query.split(RegExp('\\s+'));
+    print(keywords);
+    keywords.removeWhere((keyword) => keyword.isEmpty);
+    for (ProductModel product in _featuredProductList) {
+      if (keywords.any((keyword) => product.name.contains(keyword)) ||
+          keywords.any((keyword) => product.description.contains(keyword))) {
+        matchedProductList.add(product);
+      }
+    }
+    return matchedProductList;
+  }
 }

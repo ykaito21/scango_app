@@ -15,6 +15,7 @@
   "findByCurrentLocation": "現在地から探す",
   "search": "検索",
   "changeSettings": "設定の変更",
+  "noMatchedProduct": "商品が見つかりません",
   "musubitate": "むすびたて",
   "addToCart": "カートに追加",
   "signUp": "登録",
