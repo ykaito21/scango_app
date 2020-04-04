@@ -36,6 +36,9 @@ extension ContextExtensions on BuildContext {
 
   // Localization
   String translate(String key) => AppLocalizations.of(this).translate(key);
+  String translateWithCondition(
+          bool condition, String firstKey, String secondKey) =>
+      this.translate(condition ? firstKey : secondKey);
 
   String get lang => Localizations.localeOf(this).languageCode;
 

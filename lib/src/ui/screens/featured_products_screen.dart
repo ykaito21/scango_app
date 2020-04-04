@@ -16,9 +16,7 @@ class FeaturedProductsScreen extends StatelessWidget {
           child: Padding(
             padding: StyleList.verticalHorizontalpadding1020,
             child: Text(
-              context.translate(
-                'recommendedToYou',
-              ),
+              context.translate('recommendedToYou'),
               style: StyleList.mediumBoldTextStyle,
             ),
           ),

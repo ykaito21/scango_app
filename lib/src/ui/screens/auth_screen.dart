@@ -7,7 +7,6 @@ import '../../core/providers/screen_providers/auth_screen_provider.dart';
 import '../global/style_list.dart';
 import '../global/extensions.dart';
 import '../shared/widgets/auth_button.dart';
-import '../shared/widgets/base_app_bar.dart';
 import '../shared/widgets/base_flat_button.dart';
 import '../shared/platform/platform_exception_alert_dialog.dart';
 import '../widgets/email_auth_card.dart';
@@ -26,9 +25,8 @@ class AuthScreen extends StatelessWidget {
           // e.code != 'sign_in_canceled' &&
           e.code != 'ERROR_AUTHORIZATION_DENIED') {
         PlatformExceptionAlertDialog(
-          title: authScreenProvider.authTypeSignUp
-              ? context.translate('signUpFailed')
-              : context.translate('logInFailed'),
+          title: context.translateWithCondition(
+              authScreenProvider.authTypeSignUp, 'signUpFailed', 'logInFailed'),
           exception: e,
           context: context,
         ).show(context);
@@ -48,9 +46,8 @@ class AuthScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                authTypeSignUp
-                    ? context.translate('signUp')
-                    : context.translate('logIn'),
+                context.translateWithCondition(
+                    authTypeSignUp, 'signUp', 'logIn'),
                 style: StyleList.baseSubtitleTextStyle,
               ),
             ),
@@ -68,9 +65,10 @@ class AuthScreen extends StatelessWidget {
                           AuthButton(
                             onPressed: () => _onPressedAuth(
                                 context, 'Google', authScreenProvider),
-                            buttonText: authTypeSignUp
-                                ? context.translate('signUpWithGoogle')
-                                : context.translate('logInWithGoogle'),
+                            buttonText: context.translateWithCondition(
+                                authTypeSignUp,
+                                'signUpWithGoogle',
+                                'logInWithGoogle'),
                             buttonIcon: Icon(
                               FontAwesomeIcons.google,
                               color: context.primaryColor,
@@ -80,9 +78,10 @@ class AuthScreen extends StatelessWidget {
                             AuthButton(
                               onPressed: () => _onPressedAuth(
                                   context, 'Apple', authScreenProvider),
-                              buttonText: authTypeSignUp
-                                  ? context.translate('signUpWithApple')
-                                  : context.translate('logInWithApple'),
+                              buttonText: context.translateWithCondition(
+                                  authTypeSignUp,
+                                  'signUpWithApple',
+                                  'logInWithApple'),
                               buttonIcon: Icon(
                                 FontAwesomeIcons.apple,
                                 color: context.primaryColor,
@@ -90,9 +89,10 @@ class AuthScreen extends StatelessWidget {
                             ),
                           AuthButton(
                             onPressed: authScreenProvider.toggleShowEmailForm,
-                            buttonText: authTypeSignUp
-                                ? context.translate('signUpWithEmail')
-                                : context.translate('logInWithEmail'),
+                            buttonText: context.translateWithCondition(
+                                authTypeSignUp,
+                                'signUpWithEmail',
+                                'logInWithEmail'),
                             buttonIcon: Icon(
                               FontAwesomeIcons.envelope,
                               color: context.primaryColor,
@@ -100,9 +100,10 @@ class AuthScreen extends StatelessWidget {
                           ),
                           AuthButton(
                             onPressed: authScreenProvider.toggleShowPhoneForm,
-                            buttonText: authTypeSignUp
-                                ? context.translate('signUpWithPhoneNumber')
-                                : context.translate('logInWithPhoneNumber'),
+                            buttonText: context.translateWithCondition(
+                                authTypeSignUp,
+                                'signUpWithPhoneNumber',
+                                'logInWithPhoneNumber'),
                             buttonIcon: Icon(
                               FontAwesomeIcons.mobileAlt,
                               color: context.primaryColor,
@@ -123,9 +124,8 @@ class AuthScreen extends StatelessWidget {
                     Visibility(
                       visible: !showEmailForm && !showPhoneForm,
                       child: BaseFlatButton(
-                        buttonText: authTypeSignUp
-                            ? context.translate('orLogIn')
-                            : context.translate('orSignUp'),
+                        buttonText: context.translateWithCondition(
+                            authTypeSignUp, 'orLogIn', 'orSignUp'),
                         onPressed: authScreenProvider.toggleAuthType,
                       ),
                     ),

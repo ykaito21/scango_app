@@ -14,9 +14,8 @@ class EmailAuthCard extends StatelessWidget {
   Future<void> _onSubmittedEmailAuth(BuildContext context) async {
     final authScreenProvider = context.provider<AuthScreenProvider>();
     // authScreenProvider.emailFocusNode.unfocus();
-    // final sucessSnackBarText = authScreenProvider.authTypeSignUp
-    //     ? context.translate('signUpSuccess')
-    //     : context.translate('logInSuccess');
+    // final sucessSnackBarText = context.translateWithCondition(
+    //     authScreenProvider.authTypeSignUp, 'signUpSuccess', 'logInSuccess');
     context.unfocus;
     try {
       await authScreenProvider.submitEmailAuth();
@@ -31,9 +30,8 @@ class EmailAuthCard extends StatelessWidget {
       context.pop();
     } catch (e) {
       PlatformExceptionAlertDialog(
-        title: authScreenProvider.authTypeSignUp
-            ? context.translate('signUpFailed')
-            : context.translate('logInFailed'),
+        title: context.translateWithCondition(
+            authScreenProvider.authTypeSignUp, 'signUpFailed', 'logInFailed'),
         exception: e,
         context: context,
       ).show(context);
@@ -112,9 +110,10 @@ class EmailAuthCard extends StatelessWidget {
                       stream: authScreenProvider.streamEmailAuthValid,
                       builder: (context, snapshot) {
                         return BaseButton(
-                          buttonText: authScreenProvider.authTypeSignUp
-                              ? context.translate('signUp')
-                              : context.translate('logIn'),
+                          buttonText: context.translateWithCondition(
+                              authScreenProvider.authTypeSignUp,
+                              'signUp',
+                              'logIn'),
                           onPressed: !snapshot.hasData
                               ? null
                               : () => _onSubmittedEmailAuth(context),
@@ -125,9 +124,10 @@ class EmailAuthCard extends StatelessWidget {
                 ),
               ),
               BaseFlatButton(
-                buttonText: authScreenProvider.authTypeSignUp
-                    ? context.translate('orSignUpWithOtherMethods')
-                    : context.translate('orLogInWithOtherMethods'),
+                buttonText: context.translateWithCondition(
+                    authScreenProvider.authTypeSignUp,
+                    'orSignUpWithOtherMethods',
+                    'orLogInWithOtherMethods'),
                 onPressed: authScreenProvider.toggleShowEmailForm,
               ),
             ],

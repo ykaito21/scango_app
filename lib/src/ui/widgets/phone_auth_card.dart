@@ -40,9 +40,8 @@ class PhoneAuthCard extends StatelessWidget {
       context.pop();
     } catch (e) {
       PlatformExceptionAlertDialog(
-        title: authScreenProvider.authTypeSignUp
-            ? context.translate('signUpFailed')
-            : context.translate('logInFailed'),
+        title: context.translateWithCondition(
+            authScreenProvider.authTypeSignUp, 'signUpFailed', 'logInFailed'),
         exception: e,
         context: context,
       ).show(context);
@@ -81,9 +80,10 @@ class PhoneAuthCard extends StatelessWidget {
       await authScreenProvider.submitPhoneNumberAuth(context, showOTPDialog);
     } catch (e) {
       PlatformExceptionAlertDialog(
-              title: authScreenProvider.authTypeSignUp
-                  ? context.translate('signUpFailed')
-                  : context.translate('logInFailed'),
+              title: context.translateWithCondition(
+                  authScreenProvider.authTypeSignUp,
+                  'signUpFailed',
+                  'logInFailed'),
               exception: e,
               context: context)
           .show(context);
@@ -130,9 +130,10 @@ class PhoneAuthCard extends StatelessWidget {
                       stream: authScreenProvider.streamPhoneNumberValid,
                       builder: (context, snapshot) {
                         return BaseButton(
-                          buttonText: authScreenProvider.authTypeSignUp
-                              ? context.translate('signUp')
-                              : context.translate('logIn'),
+                          buttonText: context.translateWithCondition(
+                              authScreenProvider.authTypeSignUp,
+                              'signUp',
+                              'logIn'),
                           onPressed: snapshot.hasData
                               ? () => _onSubmittedPhoneNumberAuth(context)
                               : null,
@@ -143,9 +144,10 @@ class PhoneAuthCard extends StatelessWidget {
                 ),
               ),
               BaseFlatButton(
-                buttonText: authScreenProvider.authTypeSignUp
-                    ? context.translate('orSignUpWithOtherMethods')
-                    : context.translate('orLogInWithOtherMethods'),
+                buttonText: context.translateWithCondition(
+                    authScreenProvider.authTypeSignUp,
+                    'orSignUpWithOtherMethods',
+                    'orLogInWithOtherMethods'),
                 onPressed: authScreenProvider.toggleShowPhoneForm,
               ),
             ],
