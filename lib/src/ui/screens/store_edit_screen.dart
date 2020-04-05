@@ -30,34 +30,41 @@ class StoreEditScreen extends StatelessWidget {
             style: StyleList.baseSubtitleTextStyle,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: StyleList.horizontalPadding10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Selector<StoreProvider, StoreModel>(
-                    selector: (context, storeProvider) => storeProvider.store,
-                    builder: (context, store, child) {
-                      return StoreTile(
-                        titleText: context.translate('currentStore'),
-                        subtitleText: store.name,
-                        onTap: null,
-                      );
-                    }),
-                StoreMapCard(),
-                //* search by keywords could be added
-                // StyleList.verticalBox20,
-                // BaseButton(
-                //   onPressed: () {},
-                //   buttonText: context.translate('search'),
-                // ),
-                StyleList.verticalBox20,
-                RecentStoresCard(),
-                StyleList.verticalBox20,
-                DefaultStoreCard(),
-              ],
-            ),
+        body: Padding(
+          padding: StyleList.horizontalPadding10,
+          child: Column(
+            children: <Widget>[
+              StoreMapCard(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Selector<StoreProvider, StoreModel>(
+                          selector: (context, storeProvider) =>
+                              storeProvider.store,
+                          builder: (context, store, child) {
+                            return StoreTile(
+                              titleText: context.translate('currentStore'),
+                              subtitleText: store.name,
+                              onTap: null,
+                            );
+                          }),
+                      //* search by keywords could be added
+                      // StyleList.verticalBox20,
+                      // BaseButton(
+                      //   onPressed: () {},
+                      //   buttonText: context.translate('search'),
+                      // ),
+                      StyleList.verticalBox10,
+                      RecentStoresCard(),
+                      StyleList.verticalBox10,
+                      DefaultStoreCard(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

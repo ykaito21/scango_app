@@ -37,7 +37,6 @@ class ProductProvider extends BaseProvider {
     //* could be adding search from all products with keyword subject, switchMap and stream
     List<ProductModel> matchedProductList = [];
     final keywords = query.split(RegExp('\\s+'));
-    print(keywords);
     keywords.removeWhere((keyword) => keyword.isEmpty);
     for (ProductModel product in _featuredProductList) {
       if (keywords.any((keyword) => product.name.contains(keyword)) ||
@@ -46,5 +45,23 @@ class ProductProvider extends BaseProvider {
       }
     }
     return matchedProductList;
+  }
+
+  Future<List<ProductModel>> searchProductByCode(String code) async {
+    //* need to validate code as barcode
+    try {
+      final res = await _dbService.getSelectedDataCollection(
+        //* from all products instead of featured products
+        path: ApiPath.storeFeaturedProducts(_currentStore.id),
+        referenceTag: 'code',
+        referenceId: code,
+      );
+      return res.documents.map((doc) {
+        return ProductModel.fromFirestore(doc.data, doc.documentID);
+      }).toList();
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 }

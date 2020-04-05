@@ -15,8 +15,7 @@ import '../base_provider.dart';
 class StoreProvider extends BaseProvider {
   final _dbService = DatabaseService.instance;
   final _locationService = LocationService.instance;
-  StoreModel _sampleStore =
-      StoreModel(id: '', name: '', brand: '', category: '', position: {});
+  StoreModel _sampleStore;
   StoreModel _store;
   List<StoreModel> _stores = [];
   StoreModel get store => _store;
@@ -86,10 +85,13 @@ class StoreProvider extends BaseProvider {
     }
   }
 
-  void initStoreWithoutPosition() {
+  Future<void> initStoreWithoutPosition() async {
     if (_defaultStore != null) {
       _setStore(_defaultStore);
     } else {
+      await getSampleStore();
+      //* need to avoid no store
+      //  _sampleStore = StoreModel(id: '', name: '', brand: '', category: '', position: {});
       _setStore(_sampleStore);
     }
   }

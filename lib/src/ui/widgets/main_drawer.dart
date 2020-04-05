@@ -12,8 +12,7 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //* don't need to listen auth state change
-    final user = context.provider<AuthProvider>().user;
+    final user = context.provider<AuthProvider>(listen: true).user;
     final bool unauthenticated = user == null;
     return Drawer(
       child: ListView(

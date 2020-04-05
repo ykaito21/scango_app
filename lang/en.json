@@ -16,6 +16,7 @@
   "search": "Search",
   "changeSettings": "Change Settings",
   "noMatchedProduct": "No Matched Product",
+  "noMatchedProductWithCode": "We couldn't find any matched product.",
   "musubitate": "Musubitate",
   "addToCart": "Add to Cart",
   "signUp": "Sign Up",

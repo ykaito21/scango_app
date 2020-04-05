@@ -1,17 +1,21 @@
-import 'dart:io';
-
 import 'package:badges/badges.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import '../../core/providers/app_providers/product_provider.dart';
 import '../../core/models/store_model.dart';
 import '../../core/models/cart_model.dart';
 import '../../core/providers/app_providers/cart_provider.dart';
 import '../../core/providers/app_providers/store_provider.dart';
 import '../../core/providers/screen_providers/home_screen_provider.dart';
 import '../global/routes/route_generator.dart';
+import '../global/routes/route_path.dart';
 import '../global/extensions.dart';
 import '../global/style_list.dart';
+import '../shared/platform/platform_alert_dialog.dart';
+import '../shared/platform/platform_exception_alert_dialog.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/store_product_search_delegate.dart';
 import 'featured_products_screen.dart';
@@ -20,6 +24,48 @@ import 'loading_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
+
+  Future<void> requestPermission(BuildContext context) async {
+    await PlatformAlertDialog(
+      title: context.translate('changeSettings'),
+      content: context.translate('pleaseAllowAccess'),
+      defaultActionText: 'OK',
+    ).show(context);
+    openAppSettings();
+  }
+
+  Future<void> _scanCode(BuildContext context) async {
+    final res = await Permission.camera.status;
+    if (res == PermissionStatus.denied) {
+      requestPermission(context);
+    } else {
+      final productProvider = context.provider<ProductProvider>();
+      try {
+        final code = await BarcodeScanner.scan();
+        final scannedProductList =
+            await productProvider.searchProductByCode(code);
+        print(scannedProductList);
+        if (scannedProductList.isEmpty) {
+          await PlatformAlertDialog(
+            title: context.translate('noMatchedProduct'),
+            content: context.translate('noMatchedProductWithCode'),
+            defaultActionText: 'OK',
+          ).show(context);
+        } else {
+          context.pushNamed(RoutePath.productDetailScreen,
+              arguments: scannedProductList.first);
+        }
+      } catch (e) {
+        if (e.code != BarcodeScanner.UserCanceled) {
+          PlatformExceptionAlertDialog(
+            title: context.translate('error'),
+            exception: e,
+            context: context,
+          ).show(context);
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +80,7 @@ class HomeScreen extends StatelessWidget {
               homeScreenProvider.dispose(),
           child: Consumer<HomeScreenProvider>(
             builder: (context, homeScreenProvider, child) {
+              print(store);
               return Scaffold(
                 appBar: AppBar(
                   title: Text(
@@ -116,14 +163,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                floatingActionButton: Padding(
-                  padding: (Platform.isIOS)
-                      ? const EdgeInsets.only(bottom: 30.0)
-                      : const EdgeInsets.only(bottom: 0.0),
-                  child: FloatingActionButton(
-                    child: Icon(Icons.crop_free),
-                    onPressed: () => null,
-                  ),
+                //* on iphone 11 floating action button position is way below
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => _scanCode(context),
+                  child: Icon(Icons.crop_free),
                 ),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerFloat,
