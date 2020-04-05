@@ -111,8 +111,7 @@ class StoreMapCard extends StatelessWidget {
                                       context, storeProvider, tappedStore)
                                   : null,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
+                                padding: StyleList.allPadding10,
                                 child: Text(
                                   tappedStore.name,
                                   style: StyleList.smallBoldTextStyle.copyWith(

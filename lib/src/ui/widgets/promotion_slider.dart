@@ -24,7 +24,7 @@ class PromotionSlider extends StatelessWidget {
                   baseColor: context.accentColor.withOpacity(0.5),
                   highlightColor: Colors.grey[100],
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    margin: StyleList.horizontalPadding5,
                     height: 200.0,
                     color: context.accentColor.withOpacity(0.5),
                   ),
