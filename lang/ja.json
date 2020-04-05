@@ -17,7 +17,7 @@
   "changeSettings": "設定の変更",
   "noMatchedProduct": "商品が見つかりません",
   "noMatchedProductWithCode": "該当する商品が見つかりませんでした。",
-  "musubitate": "むすびたて",
+
   "addToCart": "カートに追加",
   "signUp": "登録",
   "signUpWithGoogle": "Googleで登録",
@@ -54,7 +54,6 @@
   "addingCardSuccess": "クレジットカードを登録しました",
   "addingCardFailed": "クレジットカードを登録できませんでした",
 
-  "gonbei": "権兵衛",
   "editProfile": "プロフィール変更",
   "orderHistory": "注文履歴",
   "paymentMethods": "支払い方法",

@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scango_app/src/core/providers/app_providers/auth_provider.dart';
-import 'package:scango_app/src/core/providers/app_providers/cart_provider.dart';
+import '../../core/providers/app_providers/auth_provider.dart';
+import '../../core/providers/app_providers/cart_provider.dart';
 import '../../core/models/product_model.dart';
 import '../../core/providers/screen_providers/product_detail_screen_provider.dart';
 // import '../../core/providers/cart_provider.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/providers/app_providers/product_provider.dart';
 import '../global/extensions.dart';
-import 'featured_product_card.dart';
 import '../global/style_list.dart';
+import 'featured_product_card.dart';
 
 class StoreProductSearchDelegate extends SearchDelegate {
   @override

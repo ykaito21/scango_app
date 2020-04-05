@@ -17,7 +17,7 @@
   "changeSettings": "Change Settings",
   "noMatchedProduct": "No Matched Product",
   "noMatchedProductWithCode": "We couldn't find any matched product.",
-  "musubitate": "Musubitate",
+
   "addToCart": "Add to Cart",
   "signUp": "Sign Up",
   "signUpWithGoogle": "Sign up with Google",
@@ -54,7 +54,6 @@
   "addingCardSuccess": "Sucessfully registered your credit",
   "addingCardFailed": "Your credit registration failed",
 
-  "gonbei": "Gonbei",
   "editProfile": "Edit Profile",
   "orderHistory": "Order History",
   "paymentMethods": "Payment Methods",
